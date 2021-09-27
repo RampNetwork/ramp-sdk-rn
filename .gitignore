@@ -35,6 +35,12 @@ project.xcworkspace
 .gradle
 local.properties
 android.iml
+.project
+example/android/app/google-services.json
+
+# Android memory profiler files
+*.hprof
+
 
 # Cocoapods
 #
