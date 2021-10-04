@@ -46,6 +46,7 @@ class RampSdk: RCTEventEmitter {
         configuration.webhookStatusUrl = rawConfig["webhookStatusUrl"] as? String ?? nil
 
         configuration.hostApiKey = rawConfig["hostApiKey"] as? String ?? nil
+        configuration.deepLinkScheme = rawConfig["deepLinkScheme"] as? String ?? nil
 
         return configuration;
     }

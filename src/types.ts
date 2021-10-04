@@ -17,6 +17,7 @@ export interface IHostConfig {
   containerNode?: string;
   selectedCountryCode?: string;
   defaultAsset?: string;
+  deepLinkScheme?: string;
 }
 
 export interface IRampSdkConfig extends IHostConfig {

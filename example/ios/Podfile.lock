@@ -20,10 +20,10 @@ PODS:
     - glog
   - glog (0.3.5)
   - Microblink (5.11.1)
-  - Passbase (2.7.9):
+  - Passbase (2.8.0):
     - Microblink (= 5.11.1)
   - Ramp (1.0.2):
-    - Passbase (~> 2.7.4)
+    - Passbase (~> 2.8)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
     - FBLazyVector (= 0.63.4)
@@ -356,7 +356,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Ramp:
-    :commit: 43e48655051058819f58d0610be13339f0ca05b6
+    :commit: 61ea6d540da5f64201fe48892ee946488548952e
     :git: "git@github.com:RampNetwork/ramp-sdk-ios.git"
 
 SPEC CHECKSUMS:
@@ -367,8 +367,8 @@ SPEC CHECKSUMS:
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   Microblink: 807dd5cc6a9c6a1f7913c7e4450a3cde49dbf894
-  Passbase: c21ecad919e99f7115a74aad33738d51fb150497
-  Ramp: a8b5c67d912592cd184e1d01ec3972f5dcd5080e
+  Passbase: 0fc531e18520df5b18970631fa24dfcded311c75
+  Ramp: 872dee623bb7869b24ce05245dd03f85da06fafd
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
   React: b0a957a2c44da4113b0c4c9853d8387f8e64e615
@@ -394,4 +394,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: af065a86c682b42d74fc167b526301049d59a3c3
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2
