@@ -94,6 +94,7 @@ Right-click somewhere outside the table and select `Add Row`. Now add the entrie
 
 ![](https://gblobscdn.gitbook.com/assets%2F-LvuY9BUE6kxmJFKQiuP%2F-Lvurs2Af-6Dl5oY0aCc%2F-Lvut1EGXUM6ic8MGHqf%2Fios-permissions.png?alt=media&token=7dc039e2-1b9d-429d-a649-f09a060b198b)
 
+
 Or if you prefer to do this step with code, right-click on `Info.plist` and select Open As -> Source Code. Add the lines below somewhere inside the `<dict> </dict>`
 
     <!-- permission strings to be include in info.plist -->
@@ -104,9 +105,6 @@ Or if you prefer to do this step with code, right-click on `Info.plist` and sele
 
 
 ## Android integration
-
-> Note: Make sure your Android Studio also supports Kotlin. As of this writing, Android Studio Version 3.5.1 has Kotlin support. If you're using an older version, you can install Kotlin support under Android Studio → Preferences… → Plugins → Browse Repository → Type “Kotlin” in search box → Install
-
 
 To install the Ramp Android SDK, add its repository in your root  `build.gradle`  at the end of repositories:
 
@@ -158,87 +156,94 @@ First, import the module:
      import  RampSdk  from  'react-native-ramp-sdk';
 ```
 
-  
-
-
-
-
-  
-
 
 ## Filling the configuration object with your data
 
   
+In order to start the widget, you need to provide some basic configuration to the constructor of our SDK.
 
-Ramp widget allows you to provide some useful parameters before displaying it. Most of the parameters are optional. You can set options such as user wallet address, desired cryptocurrency and crypto amount, etc. In order to do so, we need to add those parameters to a `Config` object provided by SDK.
+A basic example looks like this:
+```js
+    new  RampSdk({
+    hostAppName:  'Maker DAO',
+    hostLogoUrl:  'https://cdn-images-1.medium.com/max/2600/1*nqtMwugX7TtpcS-5c3lRjw.png',
+    deepLinkScheme:  'ramprndemo'
+    })
+ ```
 
+A more detailed list of the available configurations with examples can be found  [here](https://docs.ramp.network/configuration).
   
-
-```
-
-Config(
-
-hostLogoUrl = "https://example.com/logo.png",
-
-hostAppName = "My App",
-
-userAddress = "user_blockchain_address",
-
-// optional, skip this param to use the production URL
-
-url = "https://ri-widget-staging.firebaseapp.com/",
-
-swapAsset = "ETH",
-
-fiatCurrency = "USD",
-
-fiatValue = "10",
-
-userEmailAddress = "test@example.com"
-
-)
-
-```
-You can find the description of all available parameters in our [documentation](/configuration/).
-
   
-
 ## Implementing events
 
-  
+After getting the ramp sdk object from the constructor above, you can run its methods to subscribe to and unsubscribe from sdk events.
 
-* `onPurchaseCreated(purchase: Purchase, purchaseViewToken: String, apiUrl: String)` is called when a purchase is created, and returns a `Purchase` object, containing all its parameters. All fields of are described in the documentation [here](/sdk-reference/#ramp-purchase-object).
+****Events**** to subscribe:
+ - ****IPurchaseCreatedEvent****  is called when a purchase is created, and returns a `Purchase` object, containing all its parameters. All fields of are described in the documentation [here](/sdk-reference/#ramp-purchase-object).
 
-* `onPurchaseFailed()` is called when Ramp fails in any aspect. You will see the reason of failure on the screen.
+- ****IWidgetCloseEvent****  is called when Ramp finishes the flow and can be closed, or user closed it manually.
 
-* `onWidgetClose()` is called when Ramp finishes the flow and can be closed, or user closed it manually.
-
-  
+- ****IWidgetErrorEvent**** is called when Ramp fails in any aspect. You will see the reason of failure on the screen
 
 
+****Methods:****
+
+- ***`on(type: T['type'] | '*', callback: (event: T) =>  any)`*** : use this method to subscribe to events. You can pass event type to pick specific one or pass '\*' to get all of them. On callback parameter handle the event.
+- ***`unsubscribe(type: TAllEvents['type'] | '*',callback: (event: TAllEvents) =>  any)`*** : use this method to unsubscribe from events.
   
 
 ## Starting the widget
 
-  
+ 
+That's it, now you just need to run the `show()` method to open the Ramp widget. 
 
-That's it, now you just need to run the `show(...)` method to open the Ramp widget. This method takes `config` object that you created above.
-
-  
-
-```
-
-rampSdk.show(..todo..)
-
+```js
+rampSdk.show()
 ```
 
   
 
-## Example & Demo App
+## Example
+
+  
+```typescript
+import  React  from  'react';
+import { StyleSheet, View, Button } from  'react-native';
+import  RampSdk  from  'react-native-ramp-sdk';
+
+ 
+export  default  function  App() {
+
+const  ramp = new  RampSdk({
+		url:  'https://ri-widget-staging.firebaseapp.com',
+		hostAppName:  'React Native Example',
+		hostLogoUrl:'https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg',
+	}).on('*', (event) => {
+		console.log(`RampSdk.on('*')`, event);
+	});
+
+  
+return (
+	<View  style={styles.container}>
+		<Button
+			title={`Run Ramp Widget`}
+			onPress={() =>  ramp?.show()}
+		/>
+	</View>
+	);
+}
 
   
 
-A full code example for a basic integration can be found below. You can find a demo integration showing how to integrate the Ramp SDK for Android [on our Github](https://github.com/RampNetwork/ramp-sdk-android/tree/master/demo).
+const  styles = StyleSheet.create({
+	container: {
+		flex:  1,
+		alignItems:  'center',
+		justifyContent:  'center',
+	},
+});
+```
+
 
   
 
@@ -246,7 +251,7 @@ A full code example for a basic integration can be found below. You can find a d
 
 ## Troubleshooting
 
-Build failed (xCode >= 12.0)
+***Build failed (xCode >= 12.0) with the error below:***
 
 `Undefined symbol: __swift_FORCE_LOAD_$_swiftWebKit`
 
