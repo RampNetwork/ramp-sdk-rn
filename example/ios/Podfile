@@ -13,7 +13,7 @@ target 'RampSdkExample' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :branch => 'hotfix-cocoapods'
+  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :tag => '1.1.0'
 
   pod 'react-native-ramp-sdk', :path => '../..'
 
