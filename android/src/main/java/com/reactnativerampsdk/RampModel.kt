@@ -7,8 +7,15 @@ import network.ramp.sdk.facade.Config
 import network.ramp.sdk.events.model.Purchase
 
 
+object RampModel {
 
-object Model {
+    const val moduleName ="RampSdk"
+
+    enum class Event(val eventName: String) {
+        ON_PURCHASE_CREATED("onRamp"),
+        ON_PURCHASE_FAILED("onRampPurchaseDidFail"),
+        ON_WIDGET_CLOSE("onRampDidClose")
+    }
 
     fun getConfig(rawConfig: ReadableMap) = Config(
         url = rawConfig.getString("url").orEmpty(),
@@ -26,7 +33,9 @@ object Model {
         hostApiKey = rawConfig.getString("hostApiKey").orEmpty()
     )
 
-    fun getPurchase(
+    fun getInstance(rawConfig: ReadableMap) = rawConfig.getString("instanceId")
+
+    fun getOnPurchaseCreatedPayloadMap(
         purchase: Purchase,
         purchaseViewToken: String,
         apiUrl: String,
@@ -34,11 +43,19 @@ object Model {
     ): WritableMap {
         val payloadMap: WritableMap = Arguments.createMap()
         payloadMap.putString("instanceId", instanceId)
+        payloadMap.putMap("purchase", getPurchaseMap(purchase))
+        payloadMap.putString("purchaseViewToken", purchaseViewToken)
+        payloadMap.putString("apiUrl", apiUrl)
+        return payloadMap
+    }
 
-        val purchaseMap: WritableMap = Arguments.createMap()
-        purchaseMap.putString("id", purchase.id)
-        purchaseMap.putString("endTime", purchase.endTime)
+    fun getInstanceMap(instanceId: String?): WritableMap {
+        val params: WritableMap = Arguments.createMap()
+        params.putString("instanceId", instanceId)
+        return params
+    }
 
+    private fun getAssetMap(purchase: Purchase): WritableMap {
         val assetMap: WritableMap = Arguments.createMap()
         assetMap.putString("address", purchase.asset.address)
         assetMap.putString("symbol", purchase.asset.symbol)
@@ -46,8 +63,14 @@ object Model {
         assetMap.putString("name", purchase.asset.name)
         assetMap.putInt("decimals", purchase.asset.decimals.toInt())
 
-        purchaseMap.putMap("asset", assetMap)
+        return assetMap
+    }
 
+    private fun getPurchaseMap(purchase: Purchase): WritableMap {
+        val purchaseMap: WritableMap = Arguments.createMap()
+        purchaseMap.putString("id", purchase.id)
+        purchaseMap.putString("endTime", purchase.endTime)
+        purchaseMap.putMap("asset", getAssetMap(purchase))
         purchaseMap.putString("receiverAddress", purchase.receiverAddress)
         purchaseMap.putString("cryptoAmount", purchase.cryptoAmount)
         purchaseMap.putString("fiatCurrency", purchase.fiatCurrency)
@@ -64,15 +87,6 @@ object Model {
         purchaseMap.putString("escrowAddress", purchase.escrowAddress)
         // purchaseMap.putString("escrowDetailsHash", purchase.escrowDetailsHash // ToDo Missing?
 
-        payloadMap.putMap("purchase", purchaseMap)
-        payloadMap.putString("purchaseViewToken", purchaseViewToken)
-        payloadMap.putString("apiUrl", apiUrl)
-        return payloadMap
-    }
-
-    fun getInstance(instanceId: String?): WritableMap {
-        val params: WritableMap = Arguments.createMap()
-        params.putString("instanceId", instanceId)
-        return params
+        return purchaseMap
     }
 }

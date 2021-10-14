@@ -18,58 +18,58 @@ import javax.annotation.Nullable
 
 
 class RampSdkModule(reactContext: ReactApplicationContext) :
-    ReactContextBaseJavaModule(reactContext) {
+    ReactContextBaseJavaModule(reactContext), RampCallback {
+
     private var instanceId: String? = null
 
     private val rampSDK = RampSDK()
 
-    override fun getName(): String {
-        return "RampSdk"
-    }
+    override fun getName(): String = RampModel.moduleName
 
     @ReactMethod
     fun runRamp(rawConfig: ReadableMap) {
 
-        //configJson parse from json to Config object
-        val config = Model.getConfig(rawConfig)
+        val config = RampModel.getConfig(rawConfig)
 
-        instanceId = rawConfig.getString("instanceId")
+        instanceId = RampModel.getInstance(rawConfig)
 
-        val callbackRamp: RampCallback = object : RampCallback {
-            override fun onPurchaseCreated(
-                purchase: Purchase,
-                purchaseViewToken: String,
-                apiUrl: String
-            ) {
-                sendEvent(
-                    reactApplicationContext,
-                    "onRamp",
-                    Model.getPurchase(purchase, purchaseViewToken, apiUrl, instanceId)
-                )
-            }
+        this.currentActivity?.let { activity ->
+            rampSDK.startTransaction(activity, config, this)
+        } ?: run { Log.e("RampSdkModule", "Current Activity cannot be null.") }
 
-            override fun onPurchaseFailed() {
-                sendEvent(
-                    reactApplicationContext,
-                    "onRampPurchaseDidFail",
-                    Model.getInstance(instanceId)
-                )
-            }
+    }
 
+    override fun onPurchaseCreated(
+        purchase: Purchase,
+        purchaseViewToken: String,
+        apiUrl: String
+    ) {
+        sendEvent(
+            reactApplicationContext,
+            RampModel.Event.ON_PURCHASE_CREATED.eventName,
+            RampModel.getOnPurchaseCreatedPayloadMap(
+                purchase,
+                purchaseViewToken,
+                apiUrl,
+                instanceId
+            )
+        )
+    }
 
-            override fun onWidgetClose() {
-                sendEvent(
-                    reactApplicationContext,
-                    "onRampDidClose",
-                    Model.getInstance(instanceId)
-                )
-            }
-        }
+    override fun onPurchaseFailed() {
+        sendEvent(
+            reactApplicationContext,
+            RampModel.Event.ON_PURCHASE_FAILED.eventName,
+            RampModel.getInstanceMap(instanceId)
+        )
+    }
 
-        this.currentActivity?.let{ activity ->
-            rampSDK.startTransaction(activity, config, callbackRamp)
-        }?: { Log.e("RampSdkModule","Current Activity is null.")}
-
+    override fun onWidgetClose() {
+        sendEvent(
+            reactApplicationContext,
+            RampModel.Event.ON_WIDGET_CLOSE.eventName,
+            RampModel.getInstanceMap(instanceId)
+        )
     }
 
     private fun sendEvent(
