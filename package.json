@@ -1,6 +1,6 @@
 {
   "name": "react-native-ramp-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ramp React Native SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -47,6 +47,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "@babel/runtime": "^7.15.4",
     "@ramp-network/ramp-instant-sdk": "^2.5.0"
   },
   "devDependencies": {

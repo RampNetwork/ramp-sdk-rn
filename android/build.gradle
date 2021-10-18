@@ -129,5 +129,5 @@ dependencies {
   // noinspection GradleDynamicVersion
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.github.RampNetwork:ramp-sdk-android:bugfix~actions-parameter-SNAPSHOT'
+	implementation 'com.github.RampNetwork:ramp-sdk-android:1.3.1'
 }

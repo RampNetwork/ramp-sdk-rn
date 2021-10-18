@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "11.0" }
-  s.source       = { :git => "https://github.com/RampNetwork/rect-native-ramp-sdk.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/RampNetwork/ramp-sdk-rn", :tag => "#{s.version}" }
   # s.source = { :path => '.' }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"

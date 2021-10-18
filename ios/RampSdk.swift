@@ -53,16 +53,15 @@ class RampSdk: RCTEventEmitter {
 }
 
 extension RampSdk: RampDelegate {
-    func ramp(_ rampViewController: RampViewController, didCreatePurchase purchase: RampPurchase) {
+    func ramp(_ rampViewController: RampViewController, didCreatePurchase purchase: RampPurchase, purchaseViewToken: String, apiUrl: URL) {
         let data = try! JSONEncoder().encode(purchase)
         let json = try! JSONSerialization.jsonObject(with: data)
         sendEvent(withName: "onRamp", body: [
             "instanceId": instanceId!,
             "purchase": json,
-            "purchaseViewToken": "ToDo!",
-            "apiUrl": "ToDo!"
+            "purchaseViewToken": purchaseViewToken,
+            "apiUrl": apiUrl
         ])
-        // ToDo Missing purchaseViewToken and apiUrl
     }
 
     func rampPurchaseDidFail(_ rampViewController: RampViewController) {
