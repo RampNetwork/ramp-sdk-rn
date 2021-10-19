@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { StyleSheet, View, Button, Switch, Text } from 'react-native';
-import RampSdk from 'react-native-ramp-sdk';
+import RampSdk, { WidgetEventTypes } from 'react-native-ramp-sdk';
 
 type ENV = 'DEV' | 'STAGING' | 'PROD';
 
@@ -24,8 +24,10 @@ export default function App() {
       hostLogoUrl:
         'https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg',
       deepLinkScheme: 'ramprndemo',
-    }).on('*', (event) => {
-      console.log(`RampSdk.on('*')`, event);
+    }).on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
+      console.log(`RampSdk.on(WidgetEventTypes.WIDGET_CLOSE)`, event);
+    }).on(WidgetEventTypes.PURCHASE_CREATED, (event) => {
+      console.log(`RampSdk.on(WidgetEventTypes.PURCHASE_CREATED)`, event);
     });
   }, [env]);
 

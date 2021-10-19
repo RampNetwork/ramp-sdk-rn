@@ -9,6 +9,8 @@ import {
 } from './types';
 import { getRandomIntString, initEventListenersDict } from './utils';
 
+export { WidgetEventTypes as WidgetEventTypes } from './types';
+
 interface TRampSdkNativeModule {
   runRamp(config: IRampSdkConfig): void;
 }
