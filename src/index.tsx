@@ -92,17 +92,6 @@ export default class RampSdk {
       });
     });
 
-    RampEvents.addListener('onRampPurchaseDidFail', (event) => {
-      console.log('onRampPurchaseDidFail', event);
-      if (event.instanceId !== this._instanceId) {
-        return;
-      }
-      this._dispatchEvent({
-        type: WidgetEventTypes.ERROR,
-        payload: null,
-      });
-    });
-
     RampEvents.addListener('onRampDidClose', (event) => {
       console.log('onRampDidClose', event);
       if (event.instanceId !== this._instanceId) {
