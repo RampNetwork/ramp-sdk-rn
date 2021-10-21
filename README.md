@@ -13,15 +13,17 @@ npm install @ramp-network/react-native-sdk
 ```js
 import RampSdk from "@ramp-network/react-native-sdk";
 
-```
-
-```js 
-const  ramp = new  RampSdk({
-    hostAppName:  'Maker DAO',
-    hostLogoUrl:  'https://cdn-images-1.medium.com/max/2600/1*nqtMwugX7TtpcS-5c3lRjw.png',
+const ramp = new  RampSdk({
+    hostAppName: 'React Native Example',
+    hostLogoUrl: 'https://rampnetwork.github.io/assets/misc/test-logo.png',
     deepLinkScheme:  'ramprndemo'
     })
 ```
+
+## Documentation
+
+Docs for the SDK package can be found here - [https://docs.ramp.network/mobile/react-native-sdk](https://docs.ramp.network/mobile/react-native-sdk).
+
 
 ## Contributing
 
