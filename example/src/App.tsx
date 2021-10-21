@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { StyleSheet, View, Button, Switch, Text } from 'react-native';
-import RampSdk, { WidgetEventTypes } from 'react-native-ramp-sdk';
+import RampSdk, { WidgetEventTypes } from '@ramp-network/react-native-sdk';
 
 type ENV = 'DEV' | 'STAGING' | 'PROD';
 

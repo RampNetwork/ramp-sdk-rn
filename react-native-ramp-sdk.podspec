@@ -3,7 +3,7 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = "react-native-ramp-sdk"
+  s.name         = "@ramp-network/react-native-sdk"
   s.version      = package["version"]
   s.summary      = package["description"]
   s.homepage     = package["homepage"]

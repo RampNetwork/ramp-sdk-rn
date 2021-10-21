@@ -5,17 +5,22 @@ Ramp React Native SDK
 ## Installation
 
 ```sh
-npm install react-native-ramp-sdk
+npm install @ramp-network/react-native-sdk
 ```
 
 ## Usage
 
 ```js
-import RampSdk from "react-native-ramp-sdk";
+import RampSdk from "@ramp-network/react-native-sdk";
 
-// ...
+```
 
-const result = await RampSdk.multiply(3, 7);
+```js 
+const  ramp = new  RampSdk({
+    hostAppName:  'Maker DAO',
+    hostLogoUrl:  'https://cdn-images-1.medium.com/max/2600/1*nqtMwugX7TtpcS-5c3lRjw.png',
+    deepLinkScheme:  'ramprndemo'
+    })
 ```
 
 ## Contributing

@@ -1,5 +1,5 @@
 {
-  "name": "react-native-ramp-sdk",
+  "name": "@ramp-network/react-native-sdk",
   "version": "0.2.0",
   "description": "Ramp React Native SDK",
   "main": "lib/commonjs/index",
