@@ -74,7 +74,7 @@ interface IAssetInfo {
 
 export enum WidgetEventTypes {
   PURCHASE_CREATED = 'PURCHASE_CREATED',
-  WIDGET_CLOSE = 'WIDGET_CLOSE'
+  WIDGET_CLOSE = 'WIDGET_CLOSE',
 }
 
 export interface IWidgetEvent {
@@ -99,9 +99,7 @@ export interface IWidgetCloseEvent extends IWidgetEvent {
 // ToDo fix type
 export type TEventListener = (event: any) => any;
 
-export type TAllEvents =
-  | IPurchaseCreatedEvent
-  | IWidgetCloseEvent;
+export type TAllEvents = IPurchaseCreatedEvent | IWidgetCloseEvent;
 
 export type TEventListenerDict = {
   [EventType in TAllEvents['type']]: TEventListener[];

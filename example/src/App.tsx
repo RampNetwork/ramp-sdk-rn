@@ -24,11 +24,13 @@ export default function App() {
       hostLogoUrl:
         'https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg',
       deepLinkScheme: 'ramprndemo',
-    }).on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
-      console.log(`RampSdk.on(WidgetEventTypes.WIDGET_CLOSE)`, event);
-    }).on(WidgetEventTypes.PURCHASE_CREATED, (event) => {
-      console.log(`RampSdk.on(WidgetEventTypes.PURCHASE_CREATED)`, event);
-    });
+    })
+      .on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
+        console.log(`RampSdk.on(WidgetEventTypes.WIDGET_CLOSE)`, event);
+      })
+      .on(WidgetEventTypes.PURCHASE_CREATED, (event) => {
+        console.log(`RampSdk.on(WidgetEventTypes.PURCHASE_CREATED)`, event);
+      });
   }, [env]);
 
   return (
