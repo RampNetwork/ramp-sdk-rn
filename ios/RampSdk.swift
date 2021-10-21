@@ -3,7 +3,11 @@ import Foundation
 
 @objc(RampSdk)
 class RampSdk: RCTEventEmitter {
-    
+
+    @objc static override func requiresMainQueueSetup() -> Bool {
+        return true
+    }
+
     private var instanceId: String?
 
     @objc(runRamp:)
