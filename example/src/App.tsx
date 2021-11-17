@@ -6,7 +6,7 @@ import RampSdk, { WidgetEventTypes } from '@ramp-network/react-native-sdk';
 type ENV = 'DEV' | 'STAGING' | 'PROD';
 
 const envToUrl: { [env in ENV]: string } = {
-  DEV: 'https://ri-widget-dev.firebaseapp.com',
+  DEV: 'https://ri-widget-dev2.firebaseapp.com',
   STAGING: 'https://ri-widget-staging.firebaseapp.com',
   PROD: 'https://ri-widget-prod.firebaseapp.com',
 };
