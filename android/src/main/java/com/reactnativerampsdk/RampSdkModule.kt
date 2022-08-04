@@ -2,18 +2,16 @@ package com.reactnativerampsdk
 
 import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.WritableMap
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
+import network.ramp.sdk.events.model.OffRampPurchase
 import network.ramp.sdk.events.model.Purchase
 import network.ramp.sdk.facade.RampCallback
 import network.ramp.sdk.facade.RampSDK
-import com.facebook.react.bridge.ReadableMap
-
-import com.facebook.react.bridge.WritableMap
-
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import javax.annotation.Nullable
 
 
@@ -28,7 +26,6 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
 
     @ReactMethod
     fun runRamp(rawConfig: ReadableMap) {
-
         val config = RampModel.getConfig(rawConfig)
 
         instanceId = RampModel.getInstance(rawConfig)
@@ -36,7 +33,6 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
         this.currentActivity?.let { activity ->
             rampSDK.startTransaction(activity, config, this)
         } ?: run { Log.e("RampSdkModule", "Current Activity cannot be null.") }
-
     }
 
     @ReactMethod
@@ -79,6 +75,35 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
             reactApplicationContext,
             RampModel.Event.ON_WIDGET_CLOSE.eventName,
             RampModel.getInstanceMap(instanceId)
+        )
+    }
+
+    override fun onOffRampPurchaseCreated(
+        purchase: OffRampPurchase,
+        purchaseViewToken: String,
+        apiUrl: String
+    ) {
+        sendEvent(
+            reactApplicationContext,
+            RampModel.Event.ON_OFFRAMP_PURCHASE_CREATED.eventName,
+            RampModel.getOnOffRampPurchaseCreatedPayloadMap(
+                purchase,
+                purchaseViewToken,
+                apiUrl,
+                instanceId
+            )
+        )
+    }
+
+    override fun offrampSendCrypto(
+        assetSymbol: String,
+        amount: String,
+        address: String
+    ) {
+        sendEvent(
+            reactApplicationContext,
+            RampModel.Event.OFFRAMP_SEND_CRYPTO.eventName,
+            RampModel.getOnOffRampSendCryptoPayloadMap(assetSymbol, amount, address, instanceId)
         )
     }
 

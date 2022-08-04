@@ -1,20 +1,29 @@
 package com.reactnativerampsdk
 
 import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableMap
-import network.ramp.sdk.facade.Config
+import network.ramp.sdk.events.model.Asset
+import network.ramp.sdk.events.model.Crypto
+import network.ramp.sdk.events.model.Fiat
+import network.ramp.sdk.events.model.OffRampPurchase
 import network.ramp.sdk.events.model.Purchase
+import network.ramp.sdk.facade.Config
+import network.ramp.sdk.facade.Flow
+import kotlin.collections.forEach
 
 
 object RampModel {
 
-    const val moduleName ="RampSdk"
+    const val moduleName = "RampSdk"
 
     enum class Event(val eventName: String) {
-        ON_PURCHASE_CREATED("onRamp"),
+        ON_PURCHASE_CREATED("onPurchaseCreated"),
         ON_PURCHASE_FAILED("onRampPurchaseDidFail"),
-        ON_WIDGET_CLOSE("onRampDidClose")
+        ON_WIDGET_CLOSE("onRampDidClose"),
+        OFFRAMP_SEND_CRYPTO("offrampSendCrypto"),
+        ON_OFFRAMP_PURCHASE_CREATED("onOffRampPurchaseCreated")
     }
 
     fun getConfig(rawConfig: ReadableMap) = Config(
@@ -30,7 +39,11 @@ object RampModel {
         selectedCountryCode = rawConfig.getString("selectedCountryCode").orEmpty(),
         defaultAsset = rawConfig.getString("defaultAsset").orEmpty(),
         webhookStatusUrl = rawConfig.getString("webhookStatusUrl").orEmpty(),
-        hostApiKey = rawConfig.getString("hostApiKey").orEmpty()
+        hostApiKey = rawConfig.getString("hostApiKey").orEmpty(),
+        defaultFlow = getFlow(rawConfig.getString("defaultFlow")),
+        enabledFlows = getEnabledFlows(rawConfig.getArray("enabledFlows")),
+        offrampWebhookV3Url = rawConfig.getString("offrampWebhookV3Url").orEmpty(),
+        useSendCryptoCallback = rawConfig.getBoolean("useSendCryptoCallback")
     )
 
     fun getInstance(rawConfig: ReadableMap) = rawConfig.getString("instanceId")
@@ -55,13 +68,13 @@ object RampModel {
         return params
     }
 
-    private fun getAssetMap(purchase: Purchase): WritableMap {
+    private fun getAssetMap(asset: Asset): WritableMap {
         val assetMap: WritableMap = Arguments.createMap()
-        assetMap.putString("address", purchase.asset.address)
-        assetMap.putString("symbol", purchase.asset.symbol)
-        assetMap.putString("type", purchase.asset.type)
-        assetMap.putString("name", purchase.asset.name)
-        assetMap.putInt("decimals", purchase.asset.decimals.toInt())
+        assetMap.putString("address", asset.address)
+        assetMap.putString("symbol", asset.symbol)
+        assetMap.putString("type", asset.type)
+        assetMap.putString("name", asset.name)
+        assetMap.putInt("decimals", asset.decimals.toInt())
 
         return assetMap
     }
@@ -70,7 +83,7 @@ object RampModel {
         val purchaseMap: WritableMap = Arguments.createMap()
         purchaseMap.putString("id", purchase.id)
         purchaseMap.putString("endTime", purchase.endTime)
-        purchaseMap.putMap("asset", getAssetMap(purchase))
+        purchaseMap.putMap("asset", getAssetMap(purchase.asset))
         purchaseMap.putString("receiverAddress", purchase.receiverAddress)
         purchaseMap.putString("cryptoAmount", purchase.cryptoAmount)
         purchaseMap.putString("fiatCurrency", purchase.fiatCurrency)
@@ -88,5 +101,77 @@ object RampModel {
         // purchaseMap.putString("escrowDetailsHash", purchase.escrowDetailsHash // ToDo Missing?
 
         return purchaseMap
+    }
+
+    fun getOnOffRampPurchaseCreatedPayloadMap(
+        purchase: OffRampPurchase,
+        purchaseViewToken: String,
+        apiUrl: String,
+        instanceId: String?
+    ): WritableMap {
+        val payloadMap: WritableMap = Arguments.createMap()
+        payloadMap.putString("instanceId", instanceId)
+        payloadMap.putMap("purchase", getOffRampPurchaseMap(purchase))
+        payloadMap.putString("purchaseViewToken", purchaseViewToken)
+        payloadMap.putString("apiUrl", apiUrl)
+        return payloadMap
+    }
+
+    fun getOnOffRampSendCryptoPayloadMap(
+        assetSymbol: String,
+        amount: String,
+        address: String,
+        instanceId: String?
+    ): WritableMap {
+        val payloadMap: WritableMap = Arguments.createMap()
+        payloadMap.putString("instanceId", instanceId)
+        payloadMap.putString("assetSymbol", assetSymbol)
+        payloadMap.putString("amount", amount)
+        payloadMap.putString("address", address)
+        return payloadMap
+    }
+
+    private fun getOffRampPurchaseMap(purchase: OffRampPurchase): WritableMap {
+        val purchaseMap: WritableMap = Arguments.createMap()
+        purchaseMap.putString("id", purchase.id)
+        purchaseMap.putString("createdAt", purchase.createdAt)
+        purchaseMap.putMap("crypto", getCrypto(purchase.crypto))
+        purchaseMap.putMap("fiat", getFiat(purchase.fiat))
+
+        return purchaseMap
+    }
+
+    private fun getCrypto(crypto: Crypto): WritableMap {
+        val cryptoMap: WritableMap = Arguments.createMap()
+        cryptoMap.putString("amount", crypto.amount)
+        cryptoMap.putMap("assetInfo", getAssetMap(crypto.assetInfo))
+
+        return cryptoMap
+    }
+
+    private fun getFiat(fiat: Fiat): WritableMap {
+        val fiatMap: WritableMap = Arguments.createMap()
+        fiatMap.putDouble("amount", fiat.amount)
+        fiatMap.putString("currencySymbol", fiat.currencySymbol)
+
+        return fiatMap
+    }
+
+    private fun getFlow(name: String?) =
+        when (name?.toUpperCase()) {
+            Flow.OFFRAMP.name -> Flow.OFFRAMP
+            else -> Flow.ONRAMP
+        }
+
+    private fun getEnabledFlows(arrayOfFlows: ReadableArray?): Set<Flow> {
+        val mutableSet = mutableSetOf<Flow>()
+        arrayOfFlows?.let {
+            ArrayUtil.toArray(it).forEach { value ->
+                (value as? String)?.let {
+                    mutableSet.add(getFlow(value))
+                }
+            }
+        }
+        return mutableSet
     }
 }

@@ -79,13 +79,43 @@ export default class RampSdk {
   }
 
   private _subscribeToRampEvents() {
-    RampEvents.addListener('onRamp', (event) => {
-      console.log('onRamp', event);
+    RampEvents.addListener('onPurchaseCreated', (event) => {
+      console.log('onPurchaseCreated', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
       this._dispatchEvent({
         type: WidgetEventTypes.PURCHASE_CREATED,
+        payload: {
+          purchase: event.purchase,
+          purchaseViewToken: event.purchaseViewToken,
+          apiUrl: event.apiUrl,
+        },
+      });
+    });
+
+    RampEvents.addListener('offrampSendCrypto', (event) => {
+      console.log('offrampSendCrypto', event);
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.SEND_CRYPTO,
+        payload: {
+          assetSymbol: event.assetSymbol,
+          amount: event.amount,
+          address: event.address,
+        },
+      });
+    });
+
+    RampEvents.addListener('onOffRampPurchaseCreated', (event) => {
+      console.log('onOffRampPurchaseCreated', event);
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.OFFRAMP_PURCHASE_CREATED,
         payload: {
           purchase: event.purchase,
           purchaseViewToken: event.purchaseViewToken,

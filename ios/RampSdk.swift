@@ -28,7 +28,7 @@ class RampSdk: RCTEventEmitter {
             presentedViewController?.present(ramp, animated: true)
         }
     }
-    
+    //TODO do zmiany
     override func supportedEvents() -> [String]! {
         return ["onRamp", "onRampPurchaseDidFail", "onRampDidClose"]
     }
