@@ -1,23 +1,24 @@
 // ToDo use types from @ramp-network/ramp-instant-sdk
 
 export interface IHostConfig {
+  url?: string;
+  hostAppName: string;
+  hostLogoUrl: string;
   swapAsset?: string;
   swapAmount?: string;
-  fiatValue?: string;
   fiatCurrency?: string;
+  fiatValue?: string;
   userAddress?: string;
   userEmailAddress?: string;
-  hostApiKey?: string;
-  hostLogoUrl: string;
-  hostAppName: string;
-  url?: string;
-  variant?: string;
-  webhookStatusUrl?: string;
-  finalUrl?: string;
-  containerNode?: string;
   selectedCountryCode?: string;
   defaultAsset?: string;
+  webhookStatusUrl?: string;
+  hostApiKey?: string;
   deepLinkScheme?: string;
+  defaultFlow?: string;
+  enabledFlow?: Array<string>;
+  useSendCryptoCallback?: boolean;
+  offrampWebhookV3Url?: string;
 }
 
 export interface IRampSdkConfig extends IHostConfig {
@@ -43,6 +44,14 @@ export interface IPurchase {
   status: TPurchaseStatus; // See available values below
   escrowAddress?: string; // filled only for escrow-backend purchases
   escrowDetailsHash?: string; // hash of purchase details used on-chain for escrow-based purchases
+}
+
+
+export interface IOfframpSale {
+  id: String;
+  createdAt: String; // ISO date-time string
+  crypto: ICrypto;
+  fiat: IFiat;
 }
 
 type TPaymentMethodType =
@@ -72,9 +81,21 @@ interface IAssetInfo {
   decimals: number; // token decimals, e.g. 18 for ETH/DAI, 6 for USDC
 }
 
+interface ICrypto {
+   amount: string;
+   assetInfo: IAssetInfo
+}
+
+interface IFiat {
+  amount: number;
+  currencySymbol: string;
+}
+
 export enum WidgetEventTypes {
   PURCHASE_CREATED = 'PURCHASE_CREATED',
   WIDGET_CLOSE = 'WIDGET_CLOSE',
+  OFFRAMP_SALE_CREATED = 'OFFRAMP_SALE_CREATED',
+  SEND_CRYPTO = 'SEND_CRYPTO'
 }
 
 export interface IWidgetEvent {
@@ -96,10 +117,28 @@ export interface IWidgetCloseEvent extends IWidgetEvent {
   payload: null;
 }
 
+export interface IOfframpSaleCreatedEvent extends IWidgetEvent {
+  type: WidgetEventTypes.OFFRAMP_SALE_CREATED;
+  payload: {
+    sale: IOfframpSale,
+    saleViewToken: string,
+    apiUrl: string
+  };
+}
+
+export interface ISendCryptoEvent extends IWidgetEvent {
+  type: WidgetEventTypes.SEND_CRYPTO;
+  payload: {
+    assetInfo: IAssetInfo,
+    amount: string,
+    address: string
+  };
+}
+
 // ToDo fix type
 export type TEventListener = (event: any) => any;
 
-export type TAllEvents = IPurchaseCreatedEvent | IWidgetCloseEvent;
+export type TAllEvents = IPurchaseCreatedEvent | IWidgetCloseEvent | IOfframpSaleCreatedEvent | ISendCryptoEvent;
 
 export type TEventListenerDict = {
   [EventType in TAllEvents['type']]: TEventListener[];

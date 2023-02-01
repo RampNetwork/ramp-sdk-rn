@@ -13,6 +13,7 @@ export { WidgetEventTypes as WidgetEventTypes } from './types';
 
 interface TRampSdkNativeModule {
   runRamp(config: IRampSdkConfig): void;
+  onOfframpCryptoSent(txHash: String, error: String): void;
 }
 
 const RampSdkNativeModule: TRampSdkNativeModule = NativeModules.RampSdk;
@@ -33,6 +34,12 @@ export default class RampSdk {
       instanceId: this._instanceId,
       ...this.config,
     });
+
+    return this;
+  }
+
+  public onOfframpCryptoSent(txHash: String, error: String): RampSdk {
+    RampSdkNativeModule.onOfframpCryptoSent(txHash, error);
 
     return this;
   }
@@ -79,8 +86,8 @@ export default class RampSdk {
   }
 
   private _subscribeToRampEvents() {
-    RampEvents.addListener('onRamp', (event) => {
-      console.log('onRamp', event);
+    RampEvents.addListener('onPurchaseCreated', (event) => {
+      console.log('onPurchaseCreated', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
@@ -89,6 +96,36 @@ export default class RampSdk {
         payload: {
           purchase: event.purchase,
           purchaseViewToken: event.purchaseViewToken,
+          apiUrl: event.apiUrl,
+        },
+      });
+    });
+
+    RampEvents.addListener('offrampSendCrypto', (event) => {
+      console.log('offrampSendCrypto', event);
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.SEND_CRYPTO,
+        payload: {
+          assetInfo: event.assetInfo,
+          amount: event.amount,
+          address: event.address,
+        },
+      });
+    });
+
+    RampEvents.addListener('onOfframpSaleCreated', (event) => {
+      console.log('onOfframpSaleCreated', event);
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.OFFRAMP_SALE_CREATED,
+        payload: {
+          sale: event.sale,
+          saleViewToken: event.saleViewToken,
           apiUrl: event.apiUrl,
         },
       });
