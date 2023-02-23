@@ -29,6 +29,9 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
     fun runRamp(rawConfig: ReadableMap) {
         val config = RampModel.getConfig(rawConfig)
 
+        println("SDK VERSION: " + network.ramp.sdk.BuildConfig.VERSION)
+        println("URL: " + config.url)
+
         instanceId = RampModel.getInstance(rawConfig)
 
         this.currentActivity?.let { activity ->
@@ -40,7 +43,7 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
     @ReactMethod
     fun onOffRampCryptoSent(txHash: String, error: String) {
         this.currentActivity?.let { activity ->
-            rampSDK.onOfframpCryptoSent(txHash, error) 
+            rampSDK.onOfframpCryptoSent(txHash, error)
         } ?: run { Log.e("RampSdkModule", "Current Activity cannot be null.") }
     }
 

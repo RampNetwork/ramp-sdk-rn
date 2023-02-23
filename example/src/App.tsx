@@ -2,13 +2,11 @@ import React, { useMemo, useState } from 'react';
 
 import { StyleSheet, View, Button, Switch, Text } from 'react-native';
 import RampSdk, { WidgetEventTypes } from '@ramp-network/react-native-sdk';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 type ENV = 'DEV' | 'STAGING' | 'PROD';
 
 const envToUrl: { [env in ENV]: string } = {
-  DEV: 'https://ri-widget-dev-5.firebaseapp.com',
+  DEV: 'https://app.dev.ramp-network.org',
   STAGING: 'https://ri-widget-staging.firebaseapp.com',
   PROD: 'https://ri-widget-prod.firebaseapp.com',
 };
