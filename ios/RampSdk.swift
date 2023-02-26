@@ -28,9 +28,13 @@ class RampSdk: RCTEventEmitter {
             presentedViewController?.present(ramp, animated: true)
         }
     }
-    //TODO add offramp support
+    
+    //TODO add method response habndler with SendCryptoResultPayload
+
+
+
     override func supportedEvents() -> [String]! {
-        return ["onRamp", "onRampPurchaseDidFail", "onRampDidClose"]
+        return ["onPurchaseCreated", "onRampDidClose", "offrampSendCrypto", "onOfframpSaleCreated"]
     }
     
     private func mapConfig(rawConfig: [String: Any]) -> Configuration {
@@ -57,10 +61,10 @@ class RampSdk: RCTEventEmitter {
 }
 
 extension RampSdk: RampDelegate {
-    func ramp(_ rampViewController: RampViewController, didCreatePurchase purchase: RampPurchase, purchaseViewToken: String, apiUrl: URL) {
+    func ramp(_ rampViewController: RampViewController, didCreateOnrampPurchase purchase: OnrampPurchase, purchaseViewToken: String, apiUrl: URL) {
         let data = try! JSONEncoder().encode(purchase)
         let json = try! JSONSerialization.jsonObject(with: data)
-        sendEvent(withName: "onRamp", body: [
+        sendEvent(withName: "onPurchaseCreated", body: [
             "instanceId": instanceId!,
             "purchase": json,
             "purchaseViewToken": purchaseViewToken,
@@ -68,8 +72,37 @@ extension RampSdk: RampDelegate {
         ])
     }
 
-    func rampPurchaseDidFail(_ rampViewController: RampViewController) {
-        sendEvent(withName: "onRampPurchaseDidFail", body: ["instanceId": instanceId!])
+    func ramp(_ rampViewController: RampViewController,
+              didRequestSendCrypto payload: SendCryptoPayload,
+              responseHandler: @escaping (SendCryptoResultPayload) -> Void) {
+
+        let data = try! JSONEncoder().encode(payload)
+        let json = try! JSONSerialization.jsonObject(with: data)
+
+        sendEvent(withName: "offrampSendCrypto", body: [
+            "instanceId": instanceId!,
+            "payload": json
+        ])
+
+        // TODO handle responseHandler
+
+    }
+
+    func ramp(_ rampViewController: RampViewController,
+            didCreateOfframpSale sale: OfframpSale,
+            saleViewToken: String,
+            apiUrl: URL) {
+
+        let data = try! JSONEncoder().encode(sale)
+        let json = try! JSONSerialization.jsonObject(with: data)
+
+        sendEvent(withName: "onOfframpSaleCreated", body: [
+            "instanceId": instanceId!,
+            "sale": json,
+            "saleViewToken": purchassaleViewTokeneViewToken,
+            "apiUrl": apiUrl
+        ])
+
     }
     
     func rampDidClose(_ rampViewController: RampViewController) {
@@ -77,7 +110,7 @@ extension RampSdk: RampDelegate {
     }
 }
 
-extension RampPurchase: Encodable {
+extension OnrampPurchase: Encodable {
     
     public enum CodeKeys: String, CodingKey {
         case id
@@ -123,7 +156,7 @@ extension RampPurchase: Encodable {
     }
 }
 
-extension RampPurchase.AssetInfo: Encodable {
+extension OnrampPurchase.AssetInfo: Encodable {
     public enum CodeKeys: String, CodingKey {
         case address
         case symbol
@@ -141,3 +174,87 @@ extension RampPurchase.AssetInfo: Encodable {
         try container.encode (decimals, forKey: .decimals)
     }
 }
+
+
+
+extension OfframpSale: Encodable {
+    
+    public enum CodeKeys: String, CodingKey {
+        case id
+        case createdAt
+        case crypto
+        case fiat
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodeKeys.self)
+        try container.encode (id, forKey: .id)
+        try container.encode (createdAt, forKey: .createdAt)
+        try container.encode (crypto, forKey: .crypto)
+        try container.encode (fiat, forKey: .fiat)
+    }
+}
+
+extension OfframpSale.Crypto: Encodable {
+    public enum CodeKeys: String, CodingKey {
+        case amount
+        case assetInfo
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodeKeys.self)
+        try container.encode (amount, forKey: .amount)
+        try container.encode (assetInfo, forKey: .assetInfo)
+    }
+}
+
+extension OfframpSale.Fiat: Encodable {
+    public enum CodeKeys: String, CodingKey {
+        case amount
+        case assetInfo
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodeKeys.self)
+        try container.encode (amount, forKey: .amount)
+        try container.encode (currencySymbol, forKey: .currencySymbol)
+    }
+}
+
+
+extension OfframpSale.Crypto: Encodable {
+    public enum CodeKeys: String, CodingKey {
+        case amount
+        case assetInfo
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodeKeys.self)
+        try container.encode (amount, forKey: .amount)
+        try container.encode (assetInfo, forKey: .assetInfo)
+    }
+}
+
+extension OfframpAssetInfo: Encodable {
+    
+    public enum CodeKeys: String, CodingKey {
+        case address
+        case chain
+        case decimals
+        case name
+        case symbol
+        case type
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodeKeys.self)
+        try container.encode (address, forKey: .address)
+        try container.encode (chain, forKey: .chain)
+        try container.encode (decimals, forKey: .decimals)
+        try container.encode (name, forKey: .name)
+        try container.encode (symbol, forKey: .symbol)
+        try container.encode (type, forKey: .type)
+    }
+}
+
+

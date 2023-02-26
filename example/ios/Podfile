@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '12.4'
 
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/passbase/zoomauthentication-cocoapods-specs.git'
@@ -11,11 +11,12 @@ source 'https://github.com/passbase/microblink-cocoapods-specs.git'
 target 'RampSdkExample' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(:path => config[:reactNativePath])
 
-  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :tag => '2.0.0'
 
-  pod 'react-native-ramp-sdk', :path => '../..'
+  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :tag => '4.0.0'
+
+  pod 'ramp-network-react-native-sdk', :path => '../..'
 
   # Enables Flipper.
   #
