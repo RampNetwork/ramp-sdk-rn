@@ -46,7 +46,6 @@ export interface IPurchase {
   escrowDetailsHash?: string; // hash of purchase details used on-chain for escrow-based purchases
 }
 
-
 export interface IOfframpSale {
   id: String;
   createdAt: String; // ISO date-time string
@@ -82,8 +81,8 @@ interface IAssetInfo {
 }
 
 interface ICrypto {
-   amount: string;
-   assetInfo: IAssetInfo
+  amount: string;
+  assetInfo: IAssetInfo;
 }
 
 interface IFiat {
@@ -95,7 +94,7 @@ export enum WidgetEventTypes {
   PURCHASE_CREATED = 'PURCHASE_CREATED',
   WIDGET_CLOSE = 'WIDGET_CLOSE',
   OFFRAMP_SALE_CREATED = 'OFFRAMP_SALE_CREATED',
-  SEND_CRYPTO = 'SEND_CRYPTO'
+  SEND_CRYPTO = 'SEND_CRYPTO',
 }
 
 export interface IWidgetEvent {
@@ -120,18 +119,18 @@ export interface IWidgetCloseEvent extends IWidgetEvent {
 export interface IOfframpSaleCreatedEvent extends IWidgetEvent {
   type: WidgetEventTypes.OFFRAMP_SALE_CREATED;
   payload: {
-    sale: IOfframpSale,
-    saleViewToken: string,
-    apiUrl: string
+    sale: IOfframpSale;
+    saleViewToken: string;
+    apiUrl: string;
   };
 }
 
 export interface ISendCryptoEvent extends IWidgetEvent {
   type: WidgetEventTypes.SEND_CRYPTO;
   payload: {
-    assetInfo: IAssetInfo,
-    amount: string,
-    address: string
+    assetInfo: IAssetInfo;
+    amount: string;
+    address: string;
   };
 }
 

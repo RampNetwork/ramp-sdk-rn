@@ -27,8 +27,8 @@ export default function App() {
       useSendCryptoCallback: true,
       userAddress: '0x4b7f8e04b82ad7f9e4b4cc9e1f81c5938e1b719f',
       hostApiKey: '3qncr4yvxfpro6endeaeu6npkh8qc23e9uadtazq',
-      enabledFlow: ['OFFRAMP','ONRAMP'],
-      defaultFlow: 'OFFRAMP'
+      enabledFlow: ['OFFRAMP', 'ONRAMP'],
+      defaultFlow: 'OFFRAMP',
     })
       .on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
         console.log(`RampSdk.on(WidgetEventTypes.WIDGET_CLOSE)`, event);
@@ -47,7 +47,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Select ENV</Text>
-
 
       <View style={styles.switchContainer}>
         <Text>DEV</Text>
