@@ -9,6 +9,7 @@ class RampSdk: RCTEventEmitter {
     }
 
     private var instanceId: String?
+    private var sendCryptoResponseHandler: ((SendCryptoResultPayload) -> Void)?
 
     @objc(runRamp:)
     func runRamp(rawConfig: NSDictionary) -> Void {
@@ -29,9 +30,11 @@ class RampSdk: RCTEventEmitter {
         }
     }
     
-    //TODO add method response habndler with SendCryptoResultPayload
-
-
+    @objc(onOfframpCryptoSent::)
+    func onOfframpCryptoSent(txHash: String?, error: String?) -> Void {
+        let payload = SendCryptoResultPayload(txHash: txHash)
+        sendCryptoResponseHandler?(payload)
+    }
 
     override func supportedEvents() -> [String]! {
         return ["onPurchaseCreated", "onRampDidClose", "offrampSendCrypto", "onOfframpSaleCreated"]
@@ -79,13 +82,12 @@ extension RampSdk: RampDelegate {
         let data = try! JSONEncoder().encode(payload)
         let json = try! JSONSerialization.jsonObject(with: data)
 
+        self.sendCryptoResponseHandler = responseHandler
+        
         sendEvent(withName: "offrampSendCrypto", body: [
             "instanceId": instanceId!,
             "payload": json
         ])
-
-        // TODO handle responseHandler
-
     }
 
     func ramp(_ rampViewController: RampViewController,
