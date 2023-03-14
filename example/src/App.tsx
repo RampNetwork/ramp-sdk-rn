@@ -6,9 +6,9 @@ import RampSdk, { WidgetEventTypes } from '@ramp-network/react-native-sdk';
 type ENV = 'DEV' | 'STAGING' | 'PROD';
 
 const envToUrl: { [env in ENV]: string } = {
-  DEV: 'https://ri-widget-dev2.firebaseapp.com',
+  DEV: 'https://app.5.dev.ramp-network.org',
   STAGING: 'https://ri-widget-staging.firebaseapp.com',
-  PROD: 'https://ri-widget-prod.firebaseapp.com',
+  PROD: 'https://buy.ramp.network',
 };
 
 export default function App() {
@@ -24,12 +24,21 @@ export default function App() {
       hostLogoUrl:
         'https://d33wubrfki0l68.cloudfront.net/554c3b0e09cf167f0281fda839a5433f2040b349/ecfc9/img/header_logo.svg',
       deepLinkScheme: 'ramprndemo',
+      hostApiKey: 'ku2jt8hctex6kwjsaz6ypphp26tbjysomwuj2yfj',
+      enabledFlow: ['OFFRAMP', 'ONRAMP'],
+      defaultFlow: 'OFFRAMP',
     })
       .on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
         console.log(`RampSdk.on(WidgetEventTypes.WIDGET_CLOSE)`, event);
       })
       .on(WidgetEventTypes.PURCHASE_CREATED, (event) => {
         console.log(`RampSdk.on(WidgetEventTypes.PURCHASE_CREATED)`, event);
+      })
+      .on(WidgetEventTypes.OFFRAMP_SALE_CREATED, (event) => {
+        console.log(`RampSdk.on(WidgetEventTypes.OFFRAMP_SALE_CREATED)`, event);
+      })
+      .on(WidgetEventTypes.SEND_CRYPTO, (event) => {
+        console.log(`RampSdk.on(WidgetEventTypes.SEND_CRYPTO)`, event);
       });
   }, [env]);
 
