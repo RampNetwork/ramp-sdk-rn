@@ -53,11 +53,16 @@ class RampSdk: RCTEventEmitter {
         configuration.userEmailAddress = rawConfig["userEmailAddress"] as? String ?? nil
         configuration.selectedCountryCode = rawConfig["selectedCountryCode"] as? String ?? nil
         configuration.defaultAsset = rawConfig["defaultAsset"] as? String ?? nil
-        // configuration.url = rawConfig["url"] as? String ?? nil
+        configuration.url = rawConfig["url"] as? String ?? "https://buy.ramp.network"
         configuration.webhookStatusUrl = rawConfig["webhookStatusUrl"] as? String ?? nil
 
         configuration.hostApiKey = rawConfig["hostApiKey"] as? String ?? nil
         configuration.deepLinkScheme = rawConfig["deepLinkScheme"] as? String ?? nil
+
+        configuration.defaultFlow = rawConfig["defaultFlow"] as? Configuration.Flow ?? nil
+        configuration.enabledFlows = rawConfig["enabledFlows"] as? Set<Configuration.Flow> ?? nil
+        configuration.offrampWebhookV3Url = rawConfig["offrampWebhookV3Url"] as? String ?? nil
+        configuration.useSendCryptoCallback = rawConfig["useSendCryptoCallback"] as? Bool ?? nil
 
         return configuration;
     }
