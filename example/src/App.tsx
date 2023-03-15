@@ -26,7 +26,7 @@ export default function App() {
       deepLinkScheme: 'ramprndemo',
       useSendCryptoCallback: true,
       hostApiKey: 'ku2jt8hctex6kwjsaz6ypphp26tbjysomwuj2yfj',
-      enabledFlow: ['OFFRAMP', 'ONRAMP'],
+      enabledFlows: ['OFFRAMP', 'ONRAMP'],
       defaultFlow: 'OFFRAMP',
     })
       .on(WidgetEventTypes.WIDGET_CLOSE, (event) => {

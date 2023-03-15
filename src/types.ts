@@ -16,7 +16,7 @@ export interface IHostConfig {
     hostApiKey?: string;
     deepLinkScheme?: string;
     defaultFlow?: string;
-    enabledFlow?: Array<string>;
+    enabledFlows?: Array<string>;
     useSendCryptoCallback?: boolean;
     offrampWebhookV3Url?: string;
   }

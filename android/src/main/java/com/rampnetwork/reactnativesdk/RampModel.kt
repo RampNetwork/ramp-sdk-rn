@@ -41,7 +41,7 @@ object RampModel {
     webhookStatusUrl = rawConfig.getString("webhookStatusUrl").orEmpty(),
     hostApiKey = rawConfig.getString("hostApiKey").orEmpty(),
     defaultFlow = getFlow(rawConfig.getString("defaultFlow")),
-    enabledFlows = getEnabledFlows(rawConfig.getArray("enabledFlow")),
+    enabledFlows = getEnabledFlows(rawConfig.getArray("enabledFlows")),
     offrampWebhookV3Url = rawConfig.getString("offrampWebhookV3Url").orEmpty(),
     useSendCryptoCallback = getUseSendCryptoCallback(rawConfig)
   )
