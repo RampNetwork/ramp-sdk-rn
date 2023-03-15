@@ -59,8 +59,14 @@ class RampSdk: RCTEventEmitter {
         configuration.hostApiKey = rawConfig["hostApiKey"] as? String ?? nil
         configuration.deepLinkScheme = rawConfig["deepLinkScheme"] as? String ?? nil
 
-        configuration.defaultFlow = rawConfig["defaultFlow"] as? Configuration.Flow ?? nil
-        configuration.enabledFlows = rawConfig["enabledFlows"] as? Set<Configuration.Flow> ?? nil
+        if let rawDefaultFlow = rawConfig["defaultFlow"] as? String {
+            configuration.defaultFlow = Configuration.Flow(rawValue: rawDefaultFlow)
+        }
+        if let rawEnabledFlows = rawConfig["enabledFlows"] as? [String] {
+            let enabledFlows = rawEnabledFlows.compactMap(Configuration.Flow.init(rawValue:))
+            configuration.enabledFlows = Set(enabledFlows)
+        }
+        
         configuration.offrampWebhookV3Url = rawConfig["offrampWebhookV3Url"] as? String ?? nil
         configuration.useSendCryptoCallback = rawConfig["useSendCryptoCallback"] as? Bool ?? nil
 
