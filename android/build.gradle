@@ -76,6 +76,8 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.github.RampNetwork:ramp-sdk-android:3.+'
+  testImplementation "org.junit.jupiter:junit-jupiter:5.8.2"
+
 
 }
 

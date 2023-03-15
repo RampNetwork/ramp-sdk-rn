@@ -31,6 +31,7 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
 
         println("SDK VERSION: " + network.ramp.sdk.BuildConfig.VERSION)
         println("URL: " + config.url)
+        println("CONFIG: " + config)
 
         instanceId = RampModel.getInstance(rawConfig)
 
