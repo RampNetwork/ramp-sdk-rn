@@ -66,14 +66,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row' }}>
+      <View>
         <Text>BASE URL:</Text>
       <TextInput
         value={url}
         onChangeText={setUrl}
       />
      </View>
-     <View style={{ flexDirection: 'row' }}>
+     <View>
+      
         <Text>Host API Key:</Text>
       <TextInput
         value={hostApiKey}
