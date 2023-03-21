@@ -37,7 +37,7 @@ export default class RampSdk {
 
     return this;
   }
-
+         
   public onOfframpCryptoSent(txHash: String, error: String): RampSdk {
     RampSdkNativeModule.onOfframpCryptoSent(txHash, error);
 

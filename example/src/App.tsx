@@ -66,15 +66,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.textContainer}>
         <Text>BASE URL:</Text>
       <TextInput
         value={url}
         onChangeText={setUrl}
       />
      </View>
-     <View>
-      
+     <View style={styles.textContainer}>
         <Text>Host API Key:</Text>
       <TextInput
         value={hostApiKey}
@@ -126,7 +125,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25,
+    paddingTop: 45,
+    paddingStart: 25,
+    paddingEnd: 25,
     alignItems: 'stretch',
     justifyContent: 'center',
   },
@@ -135,5 +136,9 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     justifyContent: 'space-between'
+  },
+  textContainer: {
+    paddingTop: 15,
+    paddingBottom: 15
   },
 });
