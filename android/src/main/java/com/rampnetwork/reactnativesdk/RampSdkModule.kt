@@ -42,7 +42,7 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
 
 
     @ReactMethod
-    fun onOffRampCryptoSent(txHash: String, error: String) {
+    fun onOfframpCryptoSent(txHash: String, error: String) {
         this.currentActivity?.let { activity ->
             rampSDK.onOfframpCryptoSent(txHash, error)
         } ?: run { Log.e("RampSdkModule", "Current Activity cannot be null.") }

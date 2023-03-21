@@ -24,15 +24,15 @@ export default class RampSdk {
   private _listeners: TEventListenerDict = initEventListenersDict();
   private _instanceId: string;
 
-  constructor(private config: IHostConfig) {
+  constructor() {
     this._instanceId = getRandomIntString();
     this._subscribeToRampEvents();
   }
 
-  public show(): RampSdk {
+  public show(config: IHostConfig): RampSdk {
     RampSdkNativeModule.runRamp({
       instanceId: this._instanceId,
-      ...this.config,
+      ...config,
     });
 
     return this;
@@ -70,6 +70,7 @@ export default class RampSdk {
     callback: (event: TAllEvents) => any
   ): RampSdk {
     if (type === '*') {
+      
       const allTypes = Object.entries(this._listeners);
 
       allTypes.forEach(([key, eventHandlers]) => {
