@@ -22,9 +22,8 @@ if linkage != nil
 end
 
 source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/passbase/zoomauthentication-cocoapods-specs.git'
-source 'https://github.com/passbase/cocoapods-specs.git'
-source 'https://github.com/passbase/microblink-cocoapods-specs.git'
+
+use_modular_headers!
 
 target 'ReactNativeSdkExample' do
   config = use_native_modules!
@@ -48,7 +47,7 @@ target 'ReactNativeSdkExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :tag => '4.0.0'
+  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :branch => 'codable'
 
   pod 'ramp-network-react-native-sdk', :path => '../..'
 

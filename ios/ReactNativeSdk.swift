@@ -122,18 +122,3 @@ extension RampSdk: RampDelegate {
         sendEvent(withName: "onRampDidClose", body: ["instanceId": instanceId!])
     }
 }
-
-extension SendCryptoPayload: Encodable {
-    enum CodingKeys: CodingKey {
-        case assetInfo
-        case amount
-        case address
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(assetInfo, forKey: .assetInfo)
-        try container.encode(amount, forKey: .amount)
-        try container.encode(address, forKey: .address)
-    }
-}
