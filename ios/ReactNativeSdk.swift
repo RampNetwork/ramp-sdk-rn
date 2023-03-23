@@ -91,13 +91,15 @@ extension RampSdk: RampDelegate {
               responseHandler: @escaping (SendCryptoResultPayload) -> Void) {
 
         let data = try! JSONEncoder().encode(payload)
-        let json = try! JSONSerialization.jsonObject(with: data)
+        let json = try! JSONSerialization.jsonObject(with: data) as! [String: Any]
 
         self.sendCryptoResponseHandler = responseHandler
         
         sendEvent(withName: "offrampSendCrypto", body: [
             "instanceId": instanceId!,
-            "payload": json
+            "assetInfo": json["assetInfo"],
+            "amount": json["amount"],
+            "address": json["address"]
         ])
     }
 
