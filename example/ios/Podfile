@@ -23,8 +23,6 @@ end
 
 source 'https://github.com/CocoaPods/Specs.git'
 
-use_modular_headers!
-
 target 'ReactNativeSdkExample' do
   config = use_native_modules!
 
@@ -46,6 +44,8 @@ target 'ReactNativeSdkExample' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  pod 'GoogleUtilities', modular_headers: true
 
   pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :branch => 'codable'
 
