@@ -30,7 +30,7 @@ class RampSdk: RCTEventEmitter {
         }
     }
     
-    @objc(onOfframpCryptoSent::)
+    @objc(onOfframpCryptoSent:error:)
     func onOfframpCryptoSent(txHash: String, error: String) -> Void {
         let payload = SendCryptoResultPayload(txHash: txHash)
         sendCryptoResponseHandler?(payload)
