@@ -85,6 +85,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "ReactNativeSdk"
-    codegenJavaPackageName = "com.rampnetwork.reactnativesdk"
+    codegenJavaPackageName = "network.ramp.reactnativesdk"
   }
 }

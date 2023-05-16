@@ -1,4 +1,4 @@
-package com.rampnetwork.reactnativesdk
+package network.ramp.reactnativesdk
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray

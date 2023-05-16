@@ -1,12 +1,12 @@
-package com.rampnetwork.reactnativesdk
+package network.ramp.reactnativesdk
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
 import com.facebook.react.bridge.WritableMap
-import com.rampnetwork.reactnativesdk.ArrayUtil.toArray
-import com.rampnetwork.reactnativesdk.ArrayUtil.toJSONArray
-import com.rampnetwork.reactnativesdk.ArrayUtil.toWritableArray
+import network.ramp.reactnativesdk.ArrayUtil.toArray
+import network.ramp.reactnativesdk.ArrayUtil.toJSONArray
+import network.ramp.reactnativesdk.ArrayUtil.toWritableArray
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

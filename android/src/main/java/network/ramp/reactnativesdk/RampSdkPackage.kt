@@ -1,4 +1,4 @@
-package com.rampnetwork.reactnativesdk
+package network.ramp.reactnativesdk
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

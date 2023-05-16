@@ -1,4 +1,4 @@
-package com.rampnetwork.reactnativesdk
+package network.ramp.reactnativesdk
 
 import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext

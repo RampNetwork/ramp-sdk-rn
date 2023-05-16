@@ -1,4 +1,4 @@
-package com.rampnetwork.reactnativesdk
+package network.ramp.reactnativesdk
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray
@@ -94,18 +94,19 @@ object RampModel {
     purchaseMap.putString("receiverAddress", purchase.receiverAddress)
     purchaseMap.putString("cryptoAmount", purchase.cryptoAmount)
     purchaseMap.putString("fiatCurrency", purchase.fiatCurrency)
-    purchaseMap.putString("fiatValue", purchase.fiatValue.toString()) // Double?
+    purchaseMap.putDouble("fiatValue", purchase.fiatValue.toDouble())
     purchaseMap.putDouble("assetExchangeRate", purchase.assetExchangeRate)
     purchaseMap.putDouble("baseRampFee", purchase.baseRampFee)
     purchaseMap.putDouble("networkFee", purchase.networkFee)
     purchaseMap.putDouble("appliedFee", purchase.appliedFee)
     purchaseMap.putString("paymentMethodType", purchase.paymentMethodType)
-    // purchaseMap.putString("finalTxHash", purchase.finalTxHash) // ToDo Missing?
+    purchase.finalTxHash?.let{
+        purchaseMap.putString("finalTxHash", it)
+    }
     purchaseMap.putString("createdAt", purchase.createdAt)
     purchaseMap.putString("updatedAt", purchase.updatedAt)
     purchaseMap.putString("status", purchase.status)
     purchaseMap.putString("escrowAddress", purchase.escrowAddress)
-    // purchaseMap.putString("escrowDetailsHash", purchase.escrowDetailsHash // ToDo Missing?
 
     return purchaseMap
   }
