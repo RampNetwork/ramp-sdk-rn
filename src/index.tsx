@@ -37,7 +37,7 @@ export default class RampSdk {
 
     return this;
   }
-         
+
   public onOfframpCryptoSent(txHash: String, error: String): RampSdk {
     RampSdkNativeModule.onOfframpCryptoSent(txHash, error);
 
@@ -70,7 +70,6 @@ export default class RampSdk {
     callback: (event: TAllEvents) => any
   ): RampSdk {
     if (type === '*') {
-      
       const allTypes = Object.entries(this._listeners);
 
       allTypes.forEach(([key, eventHandlers]) => {
