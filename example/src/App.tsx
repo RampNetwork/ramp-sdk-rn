@@ -48,7 +48,7 @@ export default function App() {
       console.log(`RampSdk.on(WidgetEventTypes.SEND_CRYPTO)`, event);
       callbackText += JSON.stringify(event) + '\n\n';
       console.log('CALLBACKTEXT: ' + callbackText);
-      rampSdk.onOfframpCryptoSent('txHashTest', '');
+      rampSdk.onOfframpCryptoSent('txHashTest');
       setCallbackTextLabel(callbackText);
     });
 

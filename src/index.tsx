@@ -9,11 +9,11 @@ import {
 } from './types';
 import { getRandomIntString, initEventListenersDict } from './utils';
 
-export { WidgetEventTypes as WidgetEventTypes } from './types';
+export { WidgetEventTypes } from './types';
 
 interface TRampSdkNativeModule {
   runRamp(config: IRampSdkConfig): void;
-  onOfframpCryptoSent(txHash: String, error: String): void;
+  onOfframpCryptoSent(txHash: string, error?: string): void;
 }
 
 const RampSdkNativeModule: TRampSdkNativeModule = NativeModules.RampSdk;
@@ -38,10 +38,8 @@ export default class RampSdk {
     return this;
   }
 
-  public onOfframpCryptoSent(txHash: String, error: String): RampSdk {
-    RampSdkNativeModule.onOfframpCryptoSent(txHash, error);
-
-    return this;
+  public onOfframpCryptoSent(txHash: string): void {
+    RampSdkNativeModule.onOfframpCryptoSent(txHash, '');
   }
 
   public on<T extends TAllEvents>(

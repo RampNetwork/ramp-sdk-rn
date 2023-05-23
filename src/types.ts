@@ -47,8 +47,8 @@ export interface IPurchase {
 }
 
 export interface IOfframpSale {
-  id: String;
-  createdAt: String; // ISO date-time string
+  id: string;
+  createdAt: string; // ISO date-time string
   crypto: ICrypto;
   fiat: IFiat;
 }
