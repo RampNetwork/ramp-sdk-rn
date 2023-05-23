@@ -90,7 +90,6 @@ export default class RampSdk {
 
   private _subscribeToRampEvents() {
     RampEvents.addListener('onPurchaseCreated', (event) => {
-      console.log('onPurchaseCreated', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
@@ -105,7 +104,6 @@ export default class RampSdk {
     });
 
     RampEvents.addListener('offrampSendCrypto', (event) => {
-      console.log('offrampSendCrypto', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
@@ -120,7 +118,6 @@ export default class RampSdk {
     });
 
     RampEvents.addListener('onOfframpSaleCreated', (event) => {
-      console.log('onOfframpSaleCreated', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
@@ -135,7 +132,6 @@ export default class RampSdk {
     });
 
     RampEvents.addListener('onRampDidClose', (event) => {
-      console.log('onRampDidClose', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
