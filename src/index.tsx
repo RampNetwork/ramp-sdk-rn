@@ -9,7 +9,12 @@ import {
 } from './types';
 import { getRandomIntString, initEventListenersDict } from './utils';
 
-export { WidgetEventTypes } from './types';
+export {
+  WidgetEventTypes as RampEventTypes,
+  IHostConfig as RampConfiguration,
+  IPurchase as RampPurchase,
+  IOfframpSale as RampSale,
+} from './types';
 
 interface TRampSdkNativeModule {
   runRamp(config: IRampSdkConfig): void;

@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
 } from 'react-native';
-import RampSdk, { WidgetEventTypes } from '@ramp-network/react-native-sdk';
+import RampSdk, { RampEventTypes } from '@ramp-network/react-native-sdk';
 import type { TAllEvents } from 'src/types';
 
 export default function App() {
@@ -26,25 +26,25 @@ export default function App() {
   const [callbackTextLabel, setCallbackTextLabel] = useState('');
 
   let rampSdk: RampSdk = new RampSdk()
-    .on(WidgetEventTypes.WIDGET_CLOSE, (event) => {
+    .on(RampEventTypes.WIDGET_CLOSE, (event) => {
       widgetClose(event);
       callbackText += JSON.stringify(event) + '\n\n';
       console.log('CALLBACKTEXT: ' + callbackText);
       setCallbackTextLabel(callbackText);
     })
-    .on(WidgetEventTypes.PURCHASE_CREATED, (event) => {
+    .on(RampEventTypes.PURCHASE_CREATED, (event) => {
       console.log(`RampSdk.on(WidgetEventTypes.PURCHASE_CREATED)`, event);
       callbackText += JSON.stringify(event) + '\n\n';
       console.log('CALLBACKTEXT: ' + callbackText);
       setCallbackTextLabel(callbackText);
     })
-    .on(WidgetEventTypes.OFFRAMP_SALE_CREATED, (event) => {
+    .on(RampEventTypes.OFFRAMP_SALE_CREATED, (event) => {
       console.log(`RampSdk.on(WidgetEventTypes.OFFRAMP_SALE_CREATED)`, event);
       callbackText += JSON.stringify(event) + '\n\n';
       console.log('CALLBACKTEXT: ' + callbackText);
       setCallbackTextLabel(callbackText);
     })
-    .on(WidgetEventTypes.SEND_CRYPTO, (event) => {
+    .on(RampEventTypes.SEND_CRYPTO, (event) => {
       console.log(`RampSdk.on(WidgetEventTypes.SEND_CRYPTO)`, event);
       callbackText += JSON.stringify(event) + '\n\n';
       console.log('CALLBACKTEXT: ' + callbackText);
