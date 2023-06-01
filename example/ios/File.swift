@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  RampSdkExample
+//  ReactNativeSdkExample
 //
 
 import Foundation

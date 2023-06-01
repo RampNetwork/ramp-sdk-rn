@@ -9,10 +9,16 @@ import {
 } from './types';
 import { getRandomIntString, initEventListenersDict } from './utils';
 
-export { WidgetEventTypes as WidgetEventTypes } from './types';
+export {
+  WidgetEventTypes as RampEventTypes,
+  IHostConfig as RampConfiguration,
+  IPurchase as RampPurchase,
+  IOfframpSale as RampSale,
+} from './types';
 
 interface TRampSdkNativeModule {
   runRamp(config: IRampSdkConfig): void;
+  onOfframpCryptoSent(txHash: string, error?: string): void;
 }
 
 const RampSdkNativeModule: TRampSdkNativeModule = NativeModules.RampSdk;
@@ -23,18 +29,22 @@ export default class RampSdk {
   private _listeners: TEventListenerDict = initEventListenersDict();
   private _instanceId: string;
 
-  constructor(private config: IHostConfig) {
+  constructor() {
     this._instanceId = getRandomIntString();
     this._subscribeToRampEvents();
   }
 
-  public show(): RampSdk {
+  public show(config: IHostConfig): RampSdk {
     RampSdkNativeModule.runRamp({
       instanceId: this._instanceId,
-      ...this.config,
+      ...config,
     });
 
     return this;
+  }
+
+  public onOfframpCryptoSent(txHash: string): void {
+    RampSdkNativeModule.onOfframpCryptoSent(txHash, '');
   }
 
   public on<T extends TAllEvents>(
@@ -79,8 +89,7 @@ export default class RampSdk {
   }
 
   private _subscribeToRampEvents() {
-    RampEvents.addListener('onRamp', (event) => {
-      console.log('onRamp', event);
+    RampEvents.addListener('onPurchaseCreated', (event) => {
       if (event.instanceId !== this._instanceId) {
         return;
       }
@@ -94,8 +103,35 @@ export default class RampSdk {
       });
     });
 
+    RampEvents.addListener('offrampSendCrypto', (event) => {
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.SEND_CRYPTO,
+        payload: {
+          assetInfo: event.assetInfo,
+          amount: event.amount,
+          address: event.address,
+        },
+      });
+    });
+
+    RampEvents.addListener('onOfframpSaleCreated', (event) => {
+      if (event.instanceId !== this._instanceId) {
+        return;
+      }
+      this._dispatchEvent({
+        type: WidgetEventTypes.OFFRAMP_SALE_CREATED,
+        payload: {
+          sale: event.sale,
+          saleViewToken: event.saleViewToken,
+          apiUrl: event.apiUrl,
+        },
+      });
+    });
+
     RampEvents.addListener('onRampDidClose', (event) => {
-      console.log('onRampDidClose', event);
       if (event.instanceId !== this._instanceId) {
         return;
       }
