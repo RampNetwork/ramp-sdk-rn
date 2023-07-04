@@ -53,7 +53,7 @@ class RampSdk: RCTEventEmitter {
         configuration.userEmailAddress = rawConfig["userEmailAddress"] as? String ?? nil
         configuration.selectedCountryCode = rawConfig["selectedCountryCode"] as? String ?? nil
         configuration.defaultAsset = rawConfig["defaultAsset"] as? String ?? nil
-        configuration.url = rawConfig["url"] as? String ?? "https://buy.ramp.network"
+        configuration.url = rawConfig["url"] as? String ?? "https://app.ramp.network"
         configuration.webhookStatusUrl = rawConfig["webhookStatusUrl"] as? String ?? nil
 
         configuration.hostApiKey = rawConfig["hostApiKey"] as? String ?? nil
