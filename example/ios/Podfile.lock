@@ -121,7 +121,7 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - PromisesObjC (2.2.0)
   - Ramp (4.0.0)
-  - ramp-network-react-native-sdk (0.5.0):
+  - ramp-network-react-native-sdk (1.0.2):
     - Ramp
     - React-Core
   - RCT-Folly (2021.07.22.00):
@@ -663,7 +663,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   Ramp: e0988926ce78f6cd0870b4f3565651c6cc0555a2
-  ramp-network-react-native-sdk: 9341fb20b800f5c9ef2b91ce8d5bc11bf0a7c026
+  ramp-network-react-native-sdk: 31e897c8773097a8d34253a4fc09164f92665500
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: bec48f07daf7bcdc2655a0cde84e07d24d2a9e2a
   RCTTypeSafety: 171394eebacf71e1cfad79dbfae7ee8fc16ca80a
