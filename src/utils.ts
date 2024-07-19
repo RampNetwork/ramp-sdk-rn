@@ -1,4 +1,4 @@
-import { TEventListenerDict, WidgetEventTypes } from './types';
+import { type TEventListenerDict, WidgetEventTypes } from './types';
 
 export function initEventListenersDict(): TEventListenerDict {
   const widgetEventTypes = Array.from(Object.values(WidgetEventTypes));

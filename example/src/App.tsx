@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import {
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import RampSdk, { RampEventTypes } from '@ramp-network/react-native-sdk';
-import type { TAllEvents } from 'src/types';
+import type { TAllEvents } from '../../src/types';
 
 export default function App() {
   const [url, setUrl] = useState('https://app.dev.ramp-network.org');

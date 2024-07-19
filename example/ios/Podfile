@@ -13,7 +13,7 @@ prepare_react_native_project!
 #   dependencies: {
 #     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
 # ```
-flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
+# flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -40,14 +40,14 @@ target 'ReactNativeSdkExample' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    # :flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
   pod 'GoogleUtilities', modular_headers: true
 
-  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :branch => 'codable'
+  pod 'Ramp', :git => 'git@github.com:RampNetwork/ramp-sdk-ios.git', :tag => '4.0.2'
 
   pod 'ramp-network-react-native-sdk', :path => '../..'
 
@@ -64,6 +64,7 @@ target 'ReactNativeSdkExample' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    # __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end
+
