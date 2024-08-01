@@ -20,7 +20,6 @@ object RampModel {
 
   enum class Event(val eventName: String) {
     ON_PURCHASE_CREATED("onPurchaseCreated"),
-    ON_PURCHASE_FAILED("onRampPurchaseDidFail"),
     ON_WIDGET_CLOSE("onRampDidClose"),
     OFFRAMP_SEND_CRYPTO("offrampSendCrypto"),
     ON_OFFRAMP_SALE_CREATED("onOfframpSaleCreated")
@@ -31,6 +30,7 @@ object RampModel {
     hostAppName = rawConfig.getString("hostAppName").orEmpty(),
     hostLogoUrl = rawConfig.getString("hostLogoUrl").orEmpty(),
     swapAsset = rawConfig.getString("swapAsset").orEmpty(),
+    offrampAsset = rawConfig.getString("offrampAsset").orEmpty(),
     swapAmount = rawConfig.getString("swapAmount").orEmpty(),
     fiatCurrency = rawConfig.getString("fiatCurrency").orEmpty(),
     fiatValue = rawConfig.getString("fiatValue").orEmpty(),
@@ -82,6 +82,9 @@ object RampModel {
     assetMap.putString("type", asset.type)
     assetMap.putString("name", asset.name)
     assetMap.putInt("decimals", asset.decimals.toInt())
+    assetMap.putString("apiV3Symbol", asset.apiV3Symbol)
+    assetMap.putString("apiV3Type", asset.apiV3Type)
+    assetMap.putString("chain", asset.chain)
 
     return assetMap
   }
@@ -106,21 +109,19 @@ object RampModel {
     purchaseMap.putString("createdAt", purchase.createdAt)
     purchaseMap.putString("updatedAt", purchase.updatedAt)
     purchaseMap.putString("status", purchase.status)
-    purchaseMap.putString("escrowAddress", purchase.escrowAddress)
-
     return purchaseMap
   }
 
   fun getOnOfframpSaleCreatedPayloadMap(
     sale: OfframpSale,
-    purchaseViewToken: String,
+    saleViewToken: String,
     apiUrl: String,
     instanceId: String?
   ): WritableMap {
     val payloadMap: WritableMap = Arguments.createMap()
     payloadMap.putString("instanceId", instanceId)
     payloadMap.putMap("sale", getOfframpSaleMap(sale))
-    payloadMap.putString("purchaseViewToken", purchaseViewToken)
+    payloadMap.putString("saleViewToken", saleViewToken)
     payloadMap.putString("apiUrl", apiUrl)
     return payloadMap
   }

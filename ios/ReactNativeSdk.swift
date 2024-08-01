@@ -69,6 +69,8 @@ class RampSdk: RCTEventEmitter {
         
         configuration.offrampWebhookV3Url = rawConfig["offrampWebhookV3Url"] as? String ?? nil
         configuration.useSendCryptoCallback = rawConfig["useSendCryptoCallback"] as? Bool ?? nil
+        configuration.offrampAsset = rawConfig["offrampAsset"] as? String ?? nil
+
 
         return configuration;
     }

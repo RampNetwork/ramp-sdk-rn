@@ -42,7 +42,7 @@ PODS:
   - hermes-engine/Pre-built (0.74.3)
   - PromisesObjC (2.3.1)
   - Ramp (4.0.2)
-  - ramp-network-react-native-sdk (0.1.0):
+  - ramp-network-react-native-sdk (1.0.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1422,7 +1422,7 @@ SPEC CHECKSUMS:
   hermes-engine: 1f547997900dd0752dc0cc0ae6dd16173c49e09b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   Ramp: fb07b544581cc9ad0eb8b56b43c9d59ef6204ca2
-  ramp-network-react-native-sdk: 5e16fe301a0bcc37b5113ec09ed3ac06e34e9414
+  ramp-network-react-native-sdk: 7be462ad6d967c3349d740a5ad7ab6957a5a5cb5
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: 4c7eeb42be0b2e95195563c49be08d0b839d22b4
   RCTRequired: d530a0f489699c8500e944fde963102c42dcd0c2
@@ -1471,8 +1471,8 @@ SPEC CHECKSUMS:
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
+  Yoga: 88480008ccacea6301ff7bf58726e27a72931c8d
 
 PODFILE CHECKSUM: 9733d36b0a9466b8d9060756fa0b0084d83179c8
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.14.3
