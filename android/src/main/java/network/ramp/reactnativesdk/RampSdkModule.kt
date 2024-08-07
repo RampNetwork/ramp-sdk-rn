@@ -75,14 +75,6 @@ class RampSdkModule(reactContext: ReactApplicationContext) :
         )
     }
 
-    override fun onPurchaseFailed() {
-        sendEvent(
-            reactApplicationContext,
-            RampModel.Event.ON_PURCHASE_FAILED.eventName,
-            RampModel.getInstanceMap(instanceId)
-        )
-    }
-
     override fun onWidgetClose() {
         sendEvent(
             reactApplicationContext,

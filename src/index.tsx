@@ -1,16 +1,16 @@
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 import {
-  IHostConfig,
-  IRampSdkConfig,
-  TAllEvents,
-  TEventListenerDict,
+  type IHostConfig,
+  type IRampSdkConfig,
+  type TAllEvents,
+  type TEventListenerDict,
   WidgetEventTypes,
 } from './types';
 import { getRandomIntString, initEventListenersDict } from './utils';
 
-export {
-  WidgetEventTypes as RampEventTypes,
+export { WidgetEventTypes as RampEventTypes } from './types';
+export type {
   IHostConfig as RampConfiguration,
   IPurchase as RampPurchase,
   IOfframpSale as RampSale,

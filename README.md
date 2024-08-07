@@ -11,19 +11,18 @@ npm install @ramp-network/react-native-sdk
 ## Usage
 
 ```js
-import RampSdk from "@ramp-network/react-native-sdk";
+import RampSdk from '@ramp-network/react-native-sdk';
 
 const ramp = new RampSdk({
   hostAppName: 'React Native Example',
   hostLogoUrl: 'https://rampnetwork.github.io/assets/misc/test-logo.png',
-  deepLinkScheme:  'ramprndemo',
+  deepLinkScheme: 'ramprndemo',
 });
 ```
 
 ## Documentation
 
 Docs for the SDK package can be found here - [https://docs.ramp.network/mobile/react-native-sdk](https://docs.ramp.network/mobile/react-native-sdk).
-
 
 ## Contributing
 
