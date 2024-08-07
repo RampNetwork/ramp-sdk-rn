@@ -70,8 +70,10 @@ android/keystores/debug.keystore
 lib/
 
 # yarn
-.yarn/
-.yarnrc.yml
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
 
 .editorconfig
 *.env.local
