@@ -1,7 +1,7 @@
 {
   "name": "@ramp-network/react-native-sdk",
   "version": "1.0.0",
-  "description": "Ramp React Native SDK",
+  "description": "Ramp Network React Native SDK",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -49,7 +49,7 @@
     "type": "git",
     "url": "git+https://github.com/RampNetwork/ramp-sdk-rn.git"
   },
-  "author": "RAMP <contact@ramp.network> (https://docs.ramp.network)",
+  "author": "Ramp Network <contact@ramp.network> (https://docs.ramp.network)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/RampNetwork/ramp-sdk-rn/issues"

@@ -1,6 +1,6 @@
 # react-native-ramp-sdk
 
-Ramp React Native SDK
+Ramp Network React Native SDK
 
 ## Installation
 
