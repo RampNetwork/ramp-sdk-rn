@@ -81,6 +81,7 @@
     "typescript": "^5.2.2"
   },
   "resolutions": {
+    "@isaacs/brace-expansion": "5.0.1",
     "@types/react": "^18.2.44",
     "node-gyp": "12.2.0"
   },
